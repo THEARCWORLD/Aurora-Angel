@@ -15,7 +15,7 @@ See more details
 
 ### Introduction
 
-> Angel Crystal
+> Aurora Angel
 
 > Current latest version：1.52/2.1.4
 
