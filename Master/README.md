@@ -18,4 +18,4 @@
 * 更新缓慢
 * 拓展性低
 
-# By THERON_VAUX
+# By THEARCWORLD
