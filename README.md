@@ -21,15 +21,6 @@
 > 这个网页项目仅提供最初始的代码，此代码内留有‘功能库’可留做功能拓展，该初始代码并不完善，望以后多多理解，详情可见本项目wiki
 > 另外可克隆本仓库做出自己的版本并发布！！！
 
-### 关于
-
-入口：
-
-* [官网](https://angelcrystal-code.mysxl.cn)
-* [咖啡厅](https://pd.qq.com/s/a6g5xr5bg?b=5)
-* [云盘](https://www.123865.com/s/YNr5Vv-EBtbd)
-* [QQ](https://qm.qq.com/q/lXDyWCMaOs)
-
 ----
 
 ### 安装教程
