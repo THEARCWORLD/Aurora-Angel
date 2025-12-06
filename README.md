@@ -27,7 +27,7 @@
 
 * [官网](https://angelcrystal-code.mysxl.cn)
 * [咖啡厅](https://pd.qq.com/s/a6g5xr5bg?b=5)
-* [云盘](https://www.123865.com/s/YNr5Vv-nMebd)
+* [云盘](https://www.123865.com/s/YNr5Vv-EBtbd)
 * [QQ](https://qm.qq.com/q/lXDyWCMaOs)
 
 ----
@@ -36,7 +36,7 @@
 
 会需要一个浏览器，然后获取构建代码
 
-* [云盘](https://www.123865.com/s/YNr5Vv-nMebd)
+* [云盘](https://www.123865.com/s/YNr5Vv-EBtbd)
 * [群](https://qm.qq.com/q/E8br7S2R22)
 
 ---
