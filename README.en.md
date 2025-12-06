@@ -33,7 +33,7 @@ You'll need a browser and then get the build code
 
 ---
 
-Disclaimer: FireTide has ceased maintenance, but you can mention the project to the developers.
+Disclaimer: FireTide & Angel crystal has ceased maintenance, but you can mention the project to the developers.
 
 Feel free to come back anytime! ⭐ Your **Star** is the motivation for my updates~
 # By THEARCWORLD
