@@ -44,4 +44,4 @@
 声明：FireTide和Angelcrystal已经停止维护，你可以向开发者提及该项目
 
 随时欢迎再来！您的 ⭐**Star** 是我更新的动力~
-# By THERON_VAUX
+# By THEARCWORLD
