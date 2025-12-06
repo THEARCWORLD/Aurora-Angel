@@ -1,4 +1,4 @@
-# Angelcrystal Separate version
+# Aurora-Angel Separate version
 描述：
 > 相比完整一体的代码要稍微精简一些，但同时bug可能也更多一点，主要适合开发，不适合体验
 > 如果想要体验更好的angelcrystal建议选择完整HTML文本
