@@ -1,4 +1,4 @@
-<h1 align="center">Angel Crystal</h1>
+<h1 align="center">Aurora Angel</h1>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![GitHub Stars](https://img.shields.io/github/stars/THEARCWORLD/Aurora-Angel?style=social)](https://github.com/THEARCWORLD/Aurora-Angel/stargazers)
