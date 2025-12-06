@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![GitHub Stars](https://img.shields.io/github/stars/THEARCWORLD/Aurora-Angel?style=social)](https://github.com/THEARCWORLD/Aurora-Angel/stargazers)
-
+<img width="1383" height="744" alt="image" src="https://github.com/user-attachments/assets/bf7ac703-0b29-4db4-a90d-ee0f8ccf5e97" />
 
 See more details
 [wiki](https://github.com/THEARCWORLD/Aurora-Angel/wiki)
