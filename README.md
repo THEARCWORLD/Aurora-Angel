@@ -14,7 +14,7 @@
 
 ### 介绍
 
->Angel Angel
+>Aurora Angel
 
 >当前最新版本：25.1.0
 
