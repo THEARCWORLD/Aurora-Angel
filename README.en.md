@@ -26,7 +26,7 @@ In addition, you can clone this repository to make your own version and publish 
 
 ### Installation tutorial
 
-You need a browser and get the build code;  If you want to use Master, you can open it on your computer browser or use the programmer
+You need a **browser** and get the build code;  If you want to use Master, you can open it on your computer browser or use the **Coder**
 
 * [Cloud Disk](https://qm.qq.com/q/7gPJUWQiu4)
 * [Discussion group](https://qm.qq.com/q/7gPJUWQiu4)
