@@ -16,8 +16,6 @@ See more details
 
 > Aurora Angel
 
-> Current latest version：25.1.0
-
 >The Old-Versions branch only contains past AngelCrystal and FireTide code. You can contact the developers in advance regarding them. For details, see this project's wiki. You can also clone this repository to create your own version and release it!!!
 
 ----
