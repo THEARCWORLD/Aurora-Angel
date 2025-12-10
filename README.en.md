@@ -2,7 +2,6 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![GitHub Stars](https://img.shields.io/github/stars/THEARCWORLD/Aurora-Angel?style=social)](https://github.com/THEARCWORLD/Aurora-Angel/stargazers)
-<img width="1383" height="744" alt="image" src="https://github.com/user-attachments/assets/bf7ac703-0b29-4db4-a90d-ee0f8ccf5e97" />
 
 See more details
 [wiki](https://github.com/THEARCWORLD/Aurora-Angel/wiki)
@@ -19,8 +18,7 @@ See more details
 
 > Current latest version：25.1.0
 
->This web project only provides the initial code, this code has a 'function library' for function expansion, the initial code is not perfect, I hope to understand more in the future, details can be found in the project wiki
-In addition, you can clone this repository to make your own version and publish it!!
+>The Old-Versions branch only contains past AngelCrystal and FireTide code. You can contact the developers in advance regarding them. For details, see this project's wiki. You can also clone this repository to create your own version and release it!!!
 
 ----
 
