@@ -2,7 +2,6 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![GitHub Stars](https://img.shields.io/github/stars/THEARCWORLD/Aurora-Angel?style=social)](https://github.com/THEARCWORLD/Aurora-Angel/stargazers)
-<img width="1383" height="744" alt="image" src="https://github.com/user-attachments/assets/bf7ac703-0b29-4db4-a90d-ee0f8ccf5e97" />
 
 更多详情见[wiki](https://github.com/THEARCWORLD/Aurora-Angel/wiki)
 
@@ -14,13 +13,18 @@
 
 ### 介绍
 
->Aurora Angel
-
->当前最新版本：25.1.0
+> Aurora Angel
 
 > 这个网页项目仅提供最初始的代码，此代码内留有‘功能库’可留做功能拓展，该初始代码并不完善，望以后多多理解，详情可见本项目wiki
 > 另外可克隆本仓库做出自己的版本并发布！！！
 
+----
+
+### 目录
+
+- [Aurora-Angel](https://github.com/THEARCWORLD/Aurora-Angel)
+- [Angel Crystal](./AC/HTML/)
+- [FireTide](./FT/HTML/)
 ----
 
 ### 安装教程
@@ -32,7 +36,7 @@
 
 ---
 
-声明：FireTide和Angelcrystal已经停止维护，你可以向开发者提及该项目
+声明：FireTide和Angelcrystal已经停止维护，你可以在Old-Versions分支下载运行它们
 
 随时欢迎再来！您的 ⭐**Star** 是我更新的动力~
 # By THEARCWORLD
