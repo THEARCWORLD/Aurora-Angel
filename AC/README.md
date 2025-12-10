@@ -1,7 +1,7 @@
 <h1 align="center">Angel Crystal</h1>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![GitHub Stars](https://img.shields.io/github/stars/TheronVaux/Angelcrystal-webUI?style=social)](https://github.com/TheronVaux/Angelcrystal-webUI/stargazers)
+[![GitHub Stars](https://img.shields.io/github/stars/THEARCWORLD/Aurora-Angel?style=social)](https://github.com/THEARCWORLD/Aurora-Angel/stargazers)
 ![1000157010](https://github.com/user-attachments/assets/1e9cce75-afd7-47a5-8358-7f56c150cc72)
 
 
