@@ -17,10 +17,10 @@ See more details
 
 > Aurora Angel
 
-> Current latest version：25.2.0
+> Current latest version：26.1.0.0104
 
->This web project only provides the initial code, this code has a 'function library' for function expansion, the initial code is not perfect, I hope to understand more in the future, details can be found in the project wiki
-In addition, you can clone this repository to make your own version and publish it!!
+> This web page project only provides the initial front-end interface code. The code contains a 'function library' for potential back-end feature expansion. The front-end code is not complete, so I hope for your understanding. For details, please refer to the project wiki.
+> Fork this repository to submit pull requests
 
 ----
 
