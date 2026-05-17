@@ -1,0 +1,2503 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aurora-Angel - Modern UI</title>
+
+    <!-- 嵌入 style.css -->
+    <style>
+        /* 现代CSS重置和基础样式 */
+        :root {
+            --primary-color: #00f7ff;
+            --primary-color-rgb: 0, 247, 255;
+            --secondary-color: #00ff9d;
+            --secondary-color-rgb: 0, 255, 157;
+            --danger-color: #ff3232;
+            --danger-color-rgb: 255, 50, 50;
+            --warning-color: #ffd700;
+            --warning-color-rgb: 255, 215, 0;
+            --success-color: #00ff88;
+            --success-color-rgb: 0, 255, 136;
+
+            --bg-color: #0a1a2f;
+            --panel-bg: rgba(10, 26, 47, 0.85);
+            --panel-border: 1px solid var(--primary-color);
+            --panel-shadow: 0 8px 32px rgba(var(--primary-color-rgb), 0.15);
+            --text-color: var(--primary-color);
+
+            --border-radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --backdrop-blur: blur(12px);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+            transition: var(--transition);
+            background-image: var(--custom-bg, none);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        /* 滚动条样式 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(var(--primary-color-rgb), 0.1);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary-color);
+        }
+
+        /* 粒子背景 */
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* 登录界面 */
+        .login-container {
+            position: relative;
+            width: 90%;
+            max-width: 440px;
+            margin: 10vh auto;
+            padding: 3rem 2.5rem;
+            background: var(--panel-bg);
+            backdrop-filter: var(--backdrop-blur);
+            border: var(--panel-border);
+            border-radius: var(--border-radius);
+            box-shadow: var(--panel-shadow);
+            z-index: 10;
+        }
+
+        .hologram-line {
+            position: absolute;
+            top: 0;
+            left: 20%;
+            width: 60%;
+            height: 2px;
+            background: linear-gradient(90deg,
+                transparent, var(--primary-color), transparent);
+            animation: scan 3s infinite linear;
+        }
+
+        .login-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(var(--primary-color-rgb), 0.5);
+        }
+
+        .input-field {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-field label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .neon-input {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(var(--primary-color-rgb), 0.3);
+            border-radius: 8px;
+            color: var(--text-color);
+            font-size: 1rem;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+        }
+
+        .neon-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 20px rgba(var(--primary-color-rgb), 0.2);
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .cyber-button {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg,
+                rgba(var(--primary-color-rgb), 0.1),
+                rgba(var(--secondary-color-rgb), 0.1));
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            color: var(--text-color);
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cyber-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                transparent,
+                rgba(var(--primary-color-rgb), 0.2),
+                transparent);
+            transition: left 0.5s;
+        }
+
+        .cyber-button:hover::before {
+            left: 100%;
+        }
+
+        .cyber-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(var(--primary-color-rgb), 0.3);
+            border-color: var(--secondary-color);
+        }
+
+        /* 主界面 */
+        .main-ui {
+            display: none;
+            position: relative;
+            min-height: 100vh;
+            padding: 1rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background: var(--panel-bg);
+            backdrop-filter: var(--backdrop-blur);
+            border: var(--panel-border);
+            border-radius: var(--border-radius);
+            margin-bottom: 2rem;
+            box-shadow: var(--panel-shadow);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .system-info {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+        }
+
+        .system-info span {
+            opacity: 0.9;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-button {
+            padding: 0.8rem 1.5rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(var(--primary-color-rgb), 0.2);
+            border-radius: 8px;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-button.active,
+        .nav-button:hover {
+            background: rgba(var(--primary-color-rgb), 0.1);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 15px rgba(var(--primary-color-rgb), 0.2);
+            transform: translateY(-1px);
+        }
+
+        /* 页面内容 */
+        .page-content {
+            position: relative;
+        }
+
+        .page-section {
+            display: none;
+            padding: 2rem;
+            background: var(--panel-bg);
+            backdrop-filter: var(--backdrop-blur);
+            border: var(--panel-border);
+            border-radius: var(--border-radius);
+            box-shadow: var(--panel-shadow);
+            min-height: 600px;
+        }
+
+        .page-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .section-title {
+            position: relative;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+            font-weight: 300;
+            border-bottom: 1px solid rgba(var(--primary-color-rgb), 0.2);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100px;
+            height: 2px;
+            background: var(--primary-color);
+        }
+
+        /* 主页样式 */
+        .home-clock {
+            text-align: center;
+            margin: 3rem 0;
+            padding: 2rem;
+        }
+
+        .clock-time {
+            font-size: 5rem;
+            font-weight: 200;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 30px rgba(var(--primary-color-rgb), 0.6);
+            letter-spacing: 3px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .clock-date {
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.8;
+        }
+
+        .greeting {
+            font-size: 1.8rem;
+            text-shadow: 0 0 10px rgba(var(--primary-color-rgb), 0.4);
+        }
+
+        .system-status {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .status-item {
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(var(--primary-color-rgb), 0.2);
+            border-radius: var(--border-radius);
+            text-align: center;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+        }
+
+        .status-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 30px rgba(var(--primary-color-rgb), 0.1);
+        }
+
+        .status-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+        }
+
+        .status-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0.5rem 0;
+        }
+
+        .status-value.online {
+            color: var(--success-color);
+        }
+
+        .status-value.offline {
+            color: var(--danger-color);
+            opacity: 0.6;
+        }
+
+        .status-desc {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        /* 功能库样式 */
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .icon-item {
+            padding: 1.5rem 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(var(--primary-color-rgb), 0.2);
+            border-radius: var(--border-radius);
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .icon-item:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: var(--primary-color);
+            box-shadow: 0 15px 35px rgba(var(--primary-color-rgb), 0.15);
+        }
+
+        .hologram-icon {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hologram-icon::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.8);
+            animation: pulse 2s infinite;
+        }
+
+        .hologram-icon::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            animation: pulse 2s infinite 1s;
+        }
+
+        .github-section {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(var(--primary-color-rgb), 0.1);
+        }
+
+        .github-link {
+            color: var(--secondary-color);
+            text-decoration: none;
+            border-bottom: 1px dashed var(--secondary-color);
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .github-link:hover {
+            color: #ffffff;
+            border-bottom: 1px solid #ffffff;
+        }
+
+        /* 日志样式 */
+        .log-tabs {
+            display: flex;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(var(--primary-color-rgb), 0.2);
+        }
+
+        .log-tab {
+            padding: 1rem 2rem;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(var(--primary-color-rgb), 0.2);
+            border-bottom: none;
+            border-radius: 8px 8px 0 0;
+            margin-right: 0.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .log-tab.active {
+            background: rgba(var(--primary-color-rgb), 0.1);
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .log-content {
+             /* 确保内容区有适当的样式 */
+            display: flex;
+            flex-direction: column;
+            min-height: 300px;
+        }
+
+        .log-input-container {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .log-input {
+            flex: 1;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(var(--primary-color-rgb), 0.2);
+            border-radius: 8px;
+            color: var(--text-color);
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+        }
+
+        .log-input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 15px rgba(var(--primary-color-rgb), 0.2);
+        }
+
+        .log-list {
+            max-height: 500px;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+
+        .log-entry {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(var(--primary-color-rgb), 0.2);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: var(--border-radius);
+            position: relative;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+        }
+
+        .log-entry:hover {
+            background: rgba(var(--primary-color-rgb), 0.05);
+            border-color: var(--primary-color);
+            transform: translateX(5px);
+        }
+
+        .log-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px dashed rgba(var(--primary-color-rgb), 0.2);
+        }
+
+        .log-time {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        .delete-log {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(var(--danger-color-rgb), 0.2);
+            border: 1px solid var(--danger-color);
+            color: var(--danger-color);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.8rem;
+        }
+
+        .delete-log:hover {
+            background: rgba(var(--danger-color-rgb), 0.4);
+            transform: scale(1.1);
+        }
+
+        /* 设置页面样式 */
+        .settings-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .setting-card {
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(var(--primary-color-rgb), 0.2);
+            border-radius: var(--border-radius);
+            backdrop-filter: blur(10px);
+        }
+
+        .setting-card h4 {
+            margin-bottom: 1.5rem;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+
+        .theme-selector,
+        .background-selector,
+        .language-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .theme-option,
+        .background-option,
+        .lang-option {
+            padding: 1.5rem;
+            border: 2px solid rgba(var(--primary-color-rgb), 0.3);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .theme-option:hover,
+        .background-option:hover,
+        .lang-option:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 25px rgba(var(--primary-color-rgb), 0.15);
+        }
+
+        .theme-option.active,
+        .background-option.active,
+        .lang-option.active {
+            border: 2px solid var(--primary-color);
+            background: rgba(var(--primary-color-rgb), 0.1);
+            box-shadow: 0 0 20px rgba(var(--primary-color-rgb), 0.2);
+        }
+
+        .theme-preview,
+        .background-preview,
+        .lang-preview {
+            width: 100%;
+            height: 100px;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .theme-label,
+        .lang-label {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        /* 功能配置样式 */
+        .feature-config {
+            margin-top: 2rem;
+        }
+
+        .feature-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .feature-header:hover {
+            background: rgba(var(--primary-color-rgb), 0.1);
+        }
+
+        .feature-header h4 {
+            margin: 0;
+            color: var(--secondary-color);
+        }
+
+        .toggle-icon {
+            transition: var(--transition);
+        }
+
+        .feature-config-content.collapsed {
+            display: none;
+        }
+
+        .feature-item {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px dashed rgba(var(--primary-color-rgb), 0.2);
+        }
+
+        .feature-item label {
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+            align-self: center;
+        }
+
+        .feature-input {
+            padding: 0.8rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(var(--primary-color-rgb), 0.2);
+            border-radius: 6px;
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+
+        .feature-input:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+            box-shadow: 0 0 10px rgba(var(--secondary-color-rgb), 0.2);
+        }
+
+        .feature-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .save-config,
+        .reset-config {
+            padding: 0.8rem 1.5rem;
+            border: 1px solid;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .save-config {
+            background: rgba(var(--secondary-color-rgb), 0.1);
+            border-color: var(--secondary-color);
+            color: var(--text-color);
+        }
+
+        .save-config:hover {
+            background: rgba(var(--secondary-color-rgb), 0.3);
+            box-shadow: 0 0 15px rgba(var(--secondary-color-rgb), 0.2);
+        }
+
+        .reset-config {
+            background: rgba(var(--danger-color-rgb), 0.1);
+            border-color: var(--danger-color);
+            color: var(--text-color);
+        }
+
+        .reset-config:hover {
+            background: rgba(var(--danger-color-rgb), 0.3);
+            box-shadow: 0 0 15px rgba(var(--danger-color-rgb), 0.2);
+        }
+
+        .feature-warning {
+            color: var(--danger-color);
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            display: none;
+            grid-column: 1 / -1;
+        }
+
+        /* 动画 */
+        @keyframes scan {
+            0% { transform: translateY(-50px); }
+            100% { transform: translateY(400px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .status-bar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .system-info {
+                gap: 1rem;
+            }
+
+            .nav-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .clock-time {
+                font-size: 3rem;
+            }
+
+            .theme-selector,
+            .background-selector,
+            .language-selector {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-item {
+                grid-template-columns: 1fr;
+            }
+
+            .icon-grid {
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 2rem 1.5rem;
+                margin: 5vh auto;
+            }
+
+            .page-section {
+                padding: 1rem;
+            }
+
+            .system-status {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+
+    <!-- 嵌入 themes.css -->
+    <style>
+        /* 蓝色主题 (默认) */
+        [data-theme="blue"] {
+            --primary-color: #00f7ff;
+            --primary-color-rgb: 0, 247, 255;
+            --secondary-color: #00ff9d;
+            --secondary-color-rgb: 0, 255, 157;
+            --danger-color: #ff3232;
+            --danger-color-rgb: 255, 50, 50;
+            --warning-color: #ffd700;
+            --warning-color-rgb: 255, 215, 0;
+            --success-color: #00ff88;
+            --success-color-rgb: 0, 255, 136;
+
+            --bg-color: #0a1a2f;
+            --panel-bg: rgba(10, 26, 47, 0.85);
+            --text-color: var(--primary-color);
+        }
+
+        /* 红色主题 */
+        [data-theme="red"] {
+            --primary-color: #ff003c;
+            --primary-color-rgb: 255, 0, 60;
+            --secondary-color: #ff8a00;
+            --secondary-color-rgb: 255, 138, 0;
+            --danger-color: #ff3232;
+            --warning-color: #ffd700;
+            --success-color: #00ff88;
+
+            --bg-color: #1a0005;
+            --panel-bg: rgba(26, 0, 5, 0.85);
+            --text-color: var(--primary-color);
+        }
+
+        /* 主题预览样式 */
+        .blue-theme {
+            background: linear-gradient(135deg, #0a1a2f, #003153);
+            border: 1px solid #00f7ff;
+        }
+
+        .red-theme {
+            background: linear-gradient(135deg, #1a0005, #450012);
+            border: 1px solid #ff003c;
+        }
+
+        /* 背景预览样式 */
+        .default-bg {
+            background: var(--bg-color);
+        }
+
+        .space-bg {
+            background-image: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .cyber-bg {
+            background-image: url('https://images.unsplash.com/photo-1516245834216-c4e5e3aff77e?auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .custom-bg {
+            border: 2px dashed var(--primary-color);
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .bg-upload {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        /* 语言预览样式 */
+        .zh-lang {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #00f7ff;
+        }
+
+        .en-lang {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #ff8a00;
+        }
+    </style>
+</head>
+<body data-theme="blue">
+    <!-- 粒子背景 -->
+    <canvas id="particles"></canvas>
+
+    <!-- 登录界面 -->
+    <div class="login-container" id="loginPanel">
+        <div class="hologram-line"></div >
+        <h2 class="login-title" data-lang-key="login.title">Aurora-Angel</h2>
+        <div class="input-field">
+            <label data-lang-key="login.adminId">账号ID:</label>
+            <input type="text" id="adminId" class="neon-input"
+                   placeholder="输入管理员ID" data-lang-key-placeholder="login.adminPlaceholder">
+        </div>
+        <div class="input-field">
+            <label data-lang-key="login.password">账号密码:</label>
+            <input type="password" id="password" class="neon-input"
+                   placeholder="输入密码" data-lang-key-placeholder="login.passwordPlaceholder">
+        </div>
+        <button class="cyber-button" id="loginBtn" data-lang-key="login.accessBtn">
+            ACCESS GRANTED
+        </button>
+    </div >
+
+    <!-- 主界面 -->
+    <div class="main-ui" id="mainPanel">
+        <header class="status-bar">
+            <div class="system-info">
+                <span data-lang-key="status.user">▼ 连接用户: Administators</span>
+                <span data-lang-key="status.connection">▼ 连接状态: SECURED</span>
+                <span data-lang-key="status.permission">▼ 访问权限: 全局</span>
+                <span data-lang-key="status.time">▼ 系统版本：26.1.0</span >
+            </div>
+            <nav class="nav-buttons">
+                <button class="nav-button active" data-page="intro" data-lang-key="nav.home">主页</button>
+                <button class="nav-button" data-page="features" data-lang-key="nav.features">功能库</button>
+                <button class="nav-button" data-page="logs" data-lang-key="nav.logs">日志</button>
+                <button class="nav-button" data-page="about" data-lang-key="nav.about">终端</button>
+                <button class="nav-button" data-page="settings" data-lang-key="nav.settings">设置</button>
+            </nav>
+        </header >
+
+        <main class="page-content">
+            <!-- 主页 -->
+            <section class="page-section active" id="introPage">
+                <div class="home-clock">
+                    <div class="clock-time" id="bigClock">Aurora-Angel WebUI</div >
+                    <div class="clock-date" id="bigDate">2023年11月15日 星期三</div >
+                    <div class="greeting" id="greeting">早上好，管理员</div >
+                </div >
+
+                <div class="system-status">
+                    <div class="status-item">
+                        <div class="status-label">极光天使</div >
+                        <div class="status-value online">存活</div >
+                        <div class="status-desc">THEARCWORLD</div >
+                    </div >
+                    <div class="status-item">
+                        <div class="status-label">AngelCrystal</div >
+                        <div class="status-value offline">阵亡</div >
+                        <div class="status-desc">TheronVaux</div >
+                    </div >
+                    <div class="status-item">
+                        <div class="status-label">FireTide</div >
+                        <div class="status-value offline">阵亡</div >
+                        <div class="status-desc">TimonDessau</div >
+                    </div >
+                    <div class="status-item">
+                        <div class="status-label">FullsUI</div >
+                        <div class="status-value offline">阵亡</div >
+                        <div class="status-desc">CRGMxhzzzzzZ</div >
+                    </div >
+                </div>
+            </section >
+
+            <!-- 功能库页面 -->
+            <section class="page-section" id="featuresPage">
+                <h3 class="section-title" data-lang-key="features.title">功能库</h3>
+                <div class="icon-grid" id="featuresGrid">
+                    <!-- 功能库图标将在这里动态生成 -->
+                </div >
+                <div class="github-section">
+                    <p data-lang-key="features.github">访问开发者GitHub仓库获取更多资源:</p>
+                    <a href="https://www.github.com/THEARCWORLD/Aurora-Angel/" class="github-link" target="_blank">
+                        Github仓库
+                    </a >
+                </div>
+            </section >
+
+            <!-- 日志页面 -->
+            <section class="page-section" id="logsPage">
+                <h3 class="section-title" data-lang-key="logs.title">系统日志</h3>
+
+                <div class="log-tabs">
+                    <button class="log-tab active" data-tab="userLogs" data-lang-key="logs.userLogs">用户日志</button>
+                    <button class="log-tab" data-tab="updateLogs" data-lang-key="logs.updateLogs">更新日志</button>
+                </div >
+
+                <div class="log-content">
+                    <!-- 用户日志 -->
+                    <div class="log-tab-content active" id="userLogsTab">
+                        <div class="log-input-container">
+                            <input type="text" id="logInput" class="log-input"
+                                   placeholder="输入日志内容..." data-lang-key-placeholder="logs.placeholder">
+                            <button class="cyber-button" id="addLogBtn" data-lang-key="logs.addBtn">添加日志</button>
+                        </div >
+
+                        <div class="log-list" id="logList">
+                            <!-- 日志条目将在这里动态生成 -->
+                        </div >
+                    </div>
+
+                    <!-- 更新日志 -->
+                    <div class="log-tab-content" id="updateLogsTab">
+                        <div class="log-list" id="updateLogList">
+                            <!-- 更新日志将在这里动态生成 -->
+                        </div >
+                    </div>
+                </div >
+            </section >
+
+            <!-- 终端页面 -->
+            <section class="page-section" id="aboutPage">
+                <h3 class="section-title" data-lang-key="about.title">系统终端</h3>
+
+                <div class="terminal">
+                    <div class="terminal-header">
+                        <div class="terminal-title">Aurora-Angel Terminal v2.0</div >
+                        <div class="terminal-controls">
+                            <div class="terminal-control close" data-action="close"></div >
+                            <div class="terminal-control minimize" data-action="minimize"></div >
+                            <div class="terminal-control maximize" data-action="maximize"></div >
+                        </div >
+                    </div>
+                    <div class="terminal-body" id="terminalBody">
+                        <!-- 终端内容将通过JS生成 -->
+                    </div >
+                </div >
+            </section >
+
+            <!-- 设置页面 -->
+            <section class="page-section" id="settingsPage">
+                <h3 class="section-title" data-lang-key="settings.title">系统设置</h3>
+
+                <div class="settings-grid">
+                    <!-- 主题设置 -->
+                    <div class="setting-card">
+                        <h4 data-lang-key="settings.themeSelect">主题选择</h4>
+                        <div class="theme-selector">
+                            <div class="theme-option active" data-theme="blue">
+                                <div class="theme-preview blue-theme">
+                                    <div class="theme-label">BLUE</div >
+                                </div >
+                                <div class="theme-name" data-lang-key="settings.blueTheme">蓝色主题</div>
+                            </div >
+
+                            <div class="theme-option" data-theme="red">
+                                <div class="theme-preview red-theme">
+                                    <div class="theme-label">RED</div >
+                                </div >
+                                <div class="theme-name" data-lang-key="settings.redTheme">红色主题</div>
+                            </div >
+                        </div >
+                    </div>
+
+                    <!-- 背景设置 -->
+                    <div class="setting-card">
+                        <h4 data-lang-key="settings.background">背景设置</h4>
+                        <div class="background-selector">
+                            <div class="background-option active" data-background="default">
+                                <div class="background-preview default-bg">
+                                    <span data-lang-key="settings.defaultBg">默认背景</span>
+                                </div >
+                            </div >
+
+                            <div class="background-option" data-background="space">
+                                <div class="background-preview space-bg">
+                                    <span data-lang-key="settings.spaceBg">星空背景</span>
+                                </div >
+                            </div>
+
+                            <div class="background-option" data-background="cyber">
+                                <div class="background-preview cyber-bg">
+                                    <span data-lang-key="settings.cyberBg">赛博背景</span>
+                                </div >
+                            </div >
+
+                            <div class="background-option" data-background="custom">
+                                <div class="background-preview custom-bg">
+                                    <span data-lang-key="settings.uploadBg">上传背景</span>
+                                    <input type="file" id="bgUpload" accept="image/*" class="bg-upload">
+                                </div >
+                            </div >
+                        </div >
+                    </div>
+
+                    <!-- 语言设置 -->
+                    <div class="setting-card">
+                        <h4 data-lang-key="settings.language">语言选择</h4>
+                        <div class="language-selector">
+                            <div class="lang-option active" data-lang="zh-CN">
+                                <div class="lang-preview zh-lang">
+                                    <div class="lang-label">中文</div >
+                                </div >
+                                <div class="lang-name">简体中文</div>
+                            </div >
+
+                            <div class="lang-option" data-lang="en">
+                                <div class="lang-preview en-lang">
+                                    <div class="lang-label">English</div >
+                                </div >
+                                <div class="lang-name">English</div>
+                            </div >
+                        </div >
+                    </div>
+
+                    <!-- 功能库配置 -->
+                    <div class="setting-card feature-config">
+                        <div class="feature-header" data-toggle="featureConfig">
+                            <h4 data-lang-key="settings.customFeatures">自定义功能库链接</h4>
+                            <div class="toggle-icon">▼</div>
+                        </div >
+
+                        <div class="feature-config-content" id="featureConfigContent">
+                            <div id="featureConfigContainer">
+                                <!-- 功能配置项将在这里动态生成 -->
+                            </div >
+
+                            <div class="feature-actions">
+                                <button class="reset-config" id="resetConfigBtn" data-lang-key="settings.resetBtn">重置配置</button>
+                                <button class="save-config" id="saveConfigBtn" data-lang-key="settings.saveBtn">保存配置</button>
+                            </div >
+                        </div>
+                    </div >
+                </div>
+            </section >
+        </main>
+    </div >
+
+
+    <!-- 嵌入 utils.js -->
+    <script>
+        // 语言包定义
+        const langPack = {
+            'zh-CN': {
+                // 登录相关
+                'login.title': 'Aurora-Angel Login',
+                'login.adminId': '账号ID:',
+                'login.password': '账号密码:',
+                'login.adminPlaceholder': '输入管理员ID',
+                'login.passwordPlaceholder': '输入密码',
+                'login.accessBtn': 'ACCESS GRANTED',
+                'login.accessDenied': 'ACCESS DENIED!',
+
+                // 状态栏
+                'status.user': '▼ 连接用户: Administators',
+                'status.connection': '▼ 连接状态: SECURED',
+                'status.permission': '▼ 访问权限: 全局',
+                'status.time': '▼ 系统时间: 00:00:00',
+
+                // 导航
+                'nav.home': '主页',
+                'nav.features': '功能库',
+                'nav.logs': '日志',
+                'nav.about': '终端',
+                'nav.settings': '设置',
+
+                // 功能库
+                'features.title': '功能库',
+                'features.github': '访问开发者GitHub仓库获取更多资源:',
+
+                // 日志
+                'logs.title': '系统日志',
+                'logs.userLogs': '用户日志',
+                'logs.updateLogs': '更新日志',
+                'logs.placeholder': '输入日志内容...',
+                'logs.addBtn': '添加日志',
+                'logs.admin': '管理员',
+                'logs.system': '系统',
+
+                // 设置
+                'settings.title': '系统设置',
+                'settings.theme': '当前主题：',
+                'settings.themeDesc': '选择您偏好的界面主题',
+                'settings.themeSelect': '主题选择',
+                'settings.blueTheme': '蓝色主题',
+                'settings.blueDesc': '默认Sapphire风格',
+                'settings.redTheme': '红色主题',
+                'settings.redDesc': '暗黑Angel风格',
+                'settings.background': '背景设置',
+                'settings.defaultBg': '默认背景',
+                'settings.spaceBg': '星空背景',
+                'settings.cyberBg': '赛博背景',
+                'settings.uploadBg': '上传背景',
+                'settings.language': '语言选择',
+                'settings.zhDesc': '系统默认语言',
+                'settings.enDesc': '英语',
+                'settings.customFeatures': '自定义功能库链接',
+                'settings.resetBtn': '重置配置',
+                'settings.saveBtn': '保存配置',
+
+                // 消息
+                'log.emptyWarning': '日志内容不能为空！',
+                'feature.emptyWarning': '名称和链接不能为空！',
+                'feature.linkWarning': '链接必须以"http://"、"https://"或"javascript:"开头',
+                'feature.saveSuccess': '功能库配置已保存！',
+                'feature.resetConfirm': '确定要重置功能库配置为默认设置吗？',
+                'feature.resetSuccess': '功能库配置已重置为默认设置！',
+                'lang.switchLog': '系统语言已切换至: ',
+                'log.bgChanged': '背景已更改为: ',
+
+                // 关于/终端
+                'about.title': '系统终端'
+            },
+            'en': {
+                // 登录相关
+                'login.title': 'Aurora-Angel Login',
+                'login.adminId': 'ID:',
+                'login.password': 'Password:',
+                'login.adminPlaceholder': 'Enter admin ID',
+                'login.passwordPlaceholder': 'Enter password',
+                'login.accessBtn': 'ACCESS GRANTED',
+                'login.accessDenied': 'ACCESS DENIED!',
+
+                // 状态栏
+                'status.user': '▼ User: Administators',
+                'status.connection': '▼ Connection: SECURED',
+                'status.permission': '▼ Permission: Global',
+                'status.time': '▼ System Time:',
+
+                // 导航
+                'nav.home': 'Home',
+                'nav.features': 'Features',
+                'nav.logs': 'Logs',
+                'nav.about': 'Terminal',
+                'nav.settings': 'Settings',
+
+                // 功能库
+                'features.title': 'Feature Library',
+                'features.github': 'Visit developer GitHub for more resources:',
+
+                // 日志
+                'logs.title': 'System Logs',
+                'logs.userLogs': 'User Logs',
+                'logs.updateLogs': 'Update Logs',
+                'logs.placeholder': 'Enter log content...',
+                'logs.addBtn': 'Add Log',
+                'logs.admin': 'Administrator',
+                'logs.system': 'System',
+
+                // 设置
+                'settings.title': 'System Settings',
+                'settings.theme': 'Current Theme:',
+                'settings.themeDesc': 'Select your preferred interface theme',
+                'settings.themeSelect': 'Theme Selection',
+                'settings.blueTheme': 'Blue Theme',
+                'settings.blueDesc': 'Default tech sapphire style',
+                'settings.redTheme': 'Red Theme',
+                'settings.redDesc': 'Dark angel style',
+                'settings.background': 'Background Settings',
+                'settings.defaultBg': 'Default Background',
+                'settings.spaceBg': 'Space Background',
+                'settings.cyberBg': 'Cyber Background',
+                'settings.uploadBg': 'Upload Background',
+                'settings.language': 'Language Selection',
+                'settings.zhDesc': 'System default language',
+                'settings.enDesc': 'English language',
+                'settings.customFeatures': 'Custom Feature Links',
+                'settings.resetBtn': 'Reset Configuration',
+                'settings.saveBtn': 'Save Configuration',
+
+                // 消息
+                'log.emptyWarning': 'Log content cannot be empty!',
+                'feature.emptyWarning': 'Name and link cannot be empty!',
+                'feature.linkWarning': 'Link must start with "http://", "https://" or "javascript:"',
+                'feature.saveSuccess': 'Feature configuration saved!',
+                'feature.resetConfirm': 'Are you sure you want to reset to default settings?',
+                'feature.resetSuccess': 'Feature configuration reset to default!',
+                'lang.switchLog': 'System language switched to: ',
+                'log.bgChanged': 'Background changed to: ',
+
+                // 关于/终端
+                'about.title': 'System Terminal'
+            }
+        };
+
+        // 默认功能库配置
+        const defaultFeatures = [
+            { name: "咖啡厅链接", link: "https://qm.qq.com/q/rbEnJU4wEg" },
+            { name: "GitHub 仓库", link: "https://www.github.com/THEARCWORLD/Aurora-Angel" },
+            { name: "1.5.2网页版", link: "https://play.mc.js.cool/1.5" },
+            { name: "1.8.8网页版", link: "https://play.mc.js.cool/1.8" },
+            { name: "1.12.2网页版", link: "https://play.mc.js.cool/1.12beta" },
+            { name: "日志分析", link: "https://mclo.gs/#info" },
+            { name: "07", link: "javascript:alert('03')" },
+            { name: "08", link: "javascript:alert('05')" },
+            { name: "09", link: "javascript:alert('06')" },
+            { name: "10", link: "javascript:alert('07')" },
+            { name: "11", link: "javascript:alert('08')" },
+            { name: "12", link: "javascript:alert('13')" },
+            { name: "13", link: "javascript:alert('14')" },
+            { name: "14", link: "javascript:alert('15')" },
+            { name: "15", link: "javascript:alert('01')" },
+            { name: "16", link: "javascript:alert('16')" }
+        ];
+
+        // 工具函数
+        const utils = {
+            // 格式化时间
+            formatTime(date) {
+                return date.toLocaleTimeString('zh-CN', {
+                    hour12: false,
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
+            },
+
+            // 格式化日期
+            formatDate(date) {
+                const weekdays = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+                return `${date.getFullYear()}年${String(date.getMonth() + 1).padStart(2, '0')}月${String(date.getDate()).padStart(2, '0')}日 ${weekdays[date.getDay()]}`;
+            },
+
+            // 防抖函数
+            debounce(func, wait) {
+                let timeout;
+                return function executedFunction(...args) {
+                    const later = () => {
+                        clearTimeout(timeout);
+                        func(...args);
+                    };
+                    clearTimeout(timeout);
+                    timeout = setTimeout(later, wait);
+                };
+            },
+
+            // 节流函数
+            throttle(func, limit) {
+                let inThrottle;
+                return function(...args) {
+                    if (!inThrottle) {
+                        func.apply(this, args);
+                        inThrottle = true;
+                        setTimeout(() => inThrottle = false, limit);
+                    }
+                }
+            },
+
+            // 生成随机ID
+            generateId() {
+                return Math.random().toString(36).substr(2, 9);
+            },
+
+            // 验证URL
+            isValidUrl(string) {
+                try {
+                    new URL(string);
+                    return true;
+                } catch (_) {
+                    return false;
+                }
+            },
+
+            // 复制到剪贴板
+            copyToClipboard(text) {
+                navigator.clipboard.writeText(text).then(() => {
+                    console.log('文本已复制到剪贴板');
+                }).catch(err => {
+                    console.error('复制失败: ', err);
+                });
+            }
+        };
+    </script>
+
+    <!-- 嵌入 particles.js -->
+    <script>
+        // 粒子系统
+        const particles = {
+            canvas: null,
+            ctx: null,
+            particles: [],
+            animationId: null,
+
+            init() {
+                this.canvas = document.getElementById('particles');
+                this.ctx = this.canvas.getContext('2d');
+
+                this.resizeCanvas();
+                // 确保在初始化时有正确的背景色来显示粒子
+                document.body.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--bg-color') || '#0a1a2f';
+                this.createParticles();
+                this.animate();
+
+                window.addEventListener('resize', () => {
+                    this.resizeCanvas();
+                    this.createParticles();
+                });
+            },
+
+            resizeCanvas() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+            },
+
+            createParticles() {
+                this.particles = [];
+                const particleCount = Math.min(200, (window.innerWidth * window.innerHeight) / 1000);
+
+                for (let i = 0; i < particleCount; i++) {
+                    this.particles.push(new Particle(this.canvas));
+                }
+            },
+
+            animate() {
+                // 使用CSS变量的背景色进行擦除，以保证粒子在深色主题下的可见性
+                const bgColor = getComputedStyle(document.body).backgroundColor;
+                this.ctx.fillStyle = bgColor || 'rgba(10, 26, 47, 1)';
+
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+                this.particles.forEach(particle => {
+                    particle.update();
+                    particle.draw(this.ctx);
+                });
+
+                this.drawConnections();
+
+                this.animationId = requestAnimationFrame(() => this.animate());
+            },
+
+            drawConnections() {
+                const maxDistance = 150;
+
+                for (let i = 0; i < this.particles.length; i++) {
+                    for (let j = i + 1; j < this.particles.length; j++) {
+                        const dx = this.particles[i].x - this.particles[j].x;
+                        const dy = this.particles[i].y - this.particles[j].y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+
+                        if (distance < maxDistance) {
+                            const opacity = 1 - (distance / maxDistance);
+                            // 使用浅灰色，模拟赛博朋克/科技感连接线
+                            this.ctx.strokeStyle = `rgba(0, 247, 255, ${opacity * 0.1})`;
+                            this.ctx.lineWidth = 0.8;
+                            this.ctx.beginPath();
+                            this.ctx.moveTo(this.particles[i].x, this.particles[i].y);
+                            this.ctx.lineTo(this.particles[j].x, this.particles[j].y);
+                            this.ctx.stroke();
+                        }
+                    }
+                }
+            },
+
+            destroy() {
+                if (this.animationId) {
+                    cancelAnimationFrame(this.animationId);
+                }
+            }
+        };
+
+        class Particle {
+            constructor(canvas) {
+                this.canvas = canvas;
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                // 速度范围略微收窄，使粒子更稳定地运动
+                this.speedX = (Math.random() - 0.5) * 0.3;
+                this.speedY = (Math.random() - 0.5) * 0.3;
+                this.opacity = Math.random() * 0.4 + 0.1;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                // 边界反弹 (更自然)
+                if (this.x > this.canvas.width || this.x < 0) {
+                    this.speedX *= -1;
+                }
+                if (this.y > this.canvas.height || this.y < 0) {
+                    this.speedY *= -1;
+                }
+            }
+
+            draw(ctx) {
+                // 使用一个偏向蓝色/青色的颜色，与主题风格一致
+                ctx.fillStyle = `rgba(0, 247, 255, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+    </script>
+
+    <!-- 嵌入 terminal.js -->
+    <script>
+        // 终端系统
+        const terminal = {
+            initialized: false,
+            history: [],
+            historyIndex: -1,
+
+            init() {
+                if (this.initialized) return;
+
+                this.setupTerminal();
+                this.addWelcomeMessage();
+                this.setupEventListeners();
+
+                this.initialized = true;
+            },
+
+            setupTerminal() {
+                const terminalBody = document.getElementById('terminalBody');
+                // 清空历史残留，但保留滚动条容器结构
+                if (terminalBody) {
+                    terminalBody.innerHTML = '';
+                    this.addInputLine(); // 确保始终有一个输入行
+                }
+            },
+
+            addWelcomeMessage() {
+                const welcomeMsg = `
+    █████╗ ███╗   ██╗ ██████╗ ███████╗██╗      ██████╗ ██████╗ ██████╗ ██╗   ██╗███████╗████████╗ █████╗ ██╗     
+    ██╔══██╗████╗  ██║██╔════╝ ██╔════╝██║     ██╔════╝██╔═══██╗██╔══██╗╚██╗ ██╔╝██╔════╝╚══██╔══╝██╔══██╗██║     
+    ███████║██╔██╗ ██║██║  ███╗█████╗  ██║     ██║     ██║   ██║██████╔╝ ╚████╔╝ █████╗     ██║   ███████║██║     
+    ██╔══██║██║╚██╗██║██║   ██║██╔══╝  ██║     ██║     ██║   ██║██╔══██╗  ╚██╔╝  ██╔══╝     ██║   ██╔══██║██║     
+    ██║  ██║██║ ╚████║╚██████╔╝███████╗███████╗╚██████╗╚██████╔╝██║  ██║   ██║   ███████╗   ██║   ██║  ██║███████╗
+    ╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝ ╚══════╝╚══════╝ ╚═════╝ ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚══════╗   ╚═╝   ╚═╝  ╚═╝╚══════╝
+                                                                                        ET Kernel：2.0.0
+                `;
+                this.addOutput(welcomeMsg);
+                this.addOutput('输入 "help" 查看可用命令');
+            },
+
+            setupEventListeners() {
+                document.addEventListener('click', () => {
+                    // 确保在点击任何地方时尝试聚焦终端输入框，提供更好的用户体验
+                    const input = document.querySelector('.terminal-input:last-child');
+                    if (input) this.focusInput();
+                });
+
+                // 终端控制按钮
+                document.querySelectorAll('.terminal-control').forEach(control => {
+                    control.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        this.handleControl(control.dataset.action);
+                    });
+                });
+            },
+
+            handleControl(action) {
+                const terminalWrapper = document.querySelector('.terminal');
+                if (!terminalWrapper) return;
+
+                switch(action) {
+                    case 'close':
+                        this.addOutput('\n[SYSTEM] 终端已关闭。');
+                        // 在实际应用中，这里应该销毁终端实例
+                        break;
+                    case 'minimize':
+                        this.addOutput('\n[SYSTEM] 终端已最小化。');
+                        terminalWrapper.style.display = 'none'; // 简化处理为隐藏
+                        break;
+                    case 'maximize':
+                        this.addOutput('\n[SYSTEM] 终端已最大化。');
+                        terminalWrapper.style.width = '100%'; // 简化处理为全宽显示
+                        terminalWrapper.style.height = 'calc(100vh - 250px)';
+                        break;
+                }
+            },
+
+            addInputLine() {
+                const terminalBody = document.getElementById('terminalBody');
+                if (!terminalBody) return;
+
+                const inputLine = document.createElement('div');
+                inputLine.className = 'terminal-line';
+                // 使用contenteditable来模拟输入，更接近终端体验
+                inputLine.innerHTML = `
+                    <span class="terminal-prompt">admin@angelcrystal:~$</span>
+                    <span class="terminal-input" contenteditable="true"></span >
+                `;
+
+                terminalBody.appendChild(inputLine);
+                this.setupInputEvents(inputLine);
+                this.focusInput();
+            },
+
+            setupInputEvents(inputLine) {
+                const input = inputLine.querySelector('.terminal-input');
+
+                // 允许输入富文本，但我们主要处理纯文本逻辑
+                input.addEventListener('keydown', (e) => {
+                    switch(e.key) {
+                        case 'Enter':
+                            e.preventDefault();
+                            this.processCommand(input.textContent.trim());
+                            input.textContent = '';
+                            break;
+                        case 'ArrowUp':
+                            e.preventDefault();
+                            this.navigateHistory(-1);
+                            break;
+                        case 'ArrowDown':
+                            e.preventDefault();
+                            this.navigateHistory(1);
+                            break;
+                        case 'Tab':
+                            e.preventDefault();
+                            this.autoComplete(input);
+                            break;
+                    }
+                });
+
+                // 确保内容是纯文本，防止用户粘贴HTML标签破坏终端外观
+                input.addEventListener('input', () => {
+                    let text = input.textContent;
+                    if (text.includes('<') || text.includes('>')) {
+                        // 简单清理 HTML 字符为实体
+                        const cleanText = text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                        input.textContent = cleanText;
+                    }
+                });
+            },
+
+            focusInput() {
+                const input = document.querySelector('.terminal-input:last-child');
+                if (input) {
+                    // 聚焦输入区域
+                    input.focus();
+
+                    // 将光标移动到末尾，以便用户立即开始输入
+                    document.execCommand('selectAll', false, null); // 全选内容（如果有）
+                    const range = document.createRange();
+                    range.selectNodeContents(input);
+                    const selection = window.getSelection();
+                    selection.removeAllRanges();
+                    selection.addRange(range);
+                }
+            },
+
+            processCommand(command) {
+                if (!command || command.toLowerCase() === 'help') return; // 如果是help，让它自己处理
+
+                // 添加到历史记录
+                this.history.push(command);
+                this.historyIndex = this.history.length;
+
+                // 显示命令
+                this.addCommandLine(command);
+
+                // 处理命令
+                const result = this.executeCommand(command);
+                this.addOutput(result);
+
+                // 添加新的输入行（这是关键，终端需要新的一行等待下一次输入）
+                this.addInputLine();
+
+                // 滚动到底部
+                this.scrollToBottom();
+            },
+
+            addCommandLine(command) {
+                const terminalBody = document.getElementById('terminalBody');
+                if (!terminalBody) return;
+                const commandLine = document.createElement('div');
+                commandLine.className = 'terminal-line';
+                // 命令行使用不同的样式来区分输入和输出
+                commandLine.innerHTML = `
+                    <span class="terminal-prompt">admin@angelcrystal:~$</span>
+                    <span class="terminal-command">${command}</span>
+                `;
+
+                terminalBody.appendChild(commandLine);
+            },
+
+            addOutput(content, type = 'normal') {
+                const terminalBody = document.getElementById('terminalBody');
+                if (!terminalBody) return;
+
+                const output = document.createElement('div');
+                output.className = `terminal-output ${type}`;
+                // 使用 innerHTML 以支持换行和富文本（如ASCII艺术）
+                output.innerHTML = content.replace(/\n/g, '<br>');
+
+                terminalBody.appendChild(output);
+            },
+
+            executeCommand(command) {
+                const cmd = command.toLowerCase().trim();
+
+                switch(cmd) {
+                    case 'help':
+                        return `[INFO] 可用命令:
+  help     - 显示帮助信息 (当前)`;
+                        return `可用命令:
+  help     - 显示帮助信息
+  about    - 显示系统信息
+  clear    - 清空终端屏幕
+  time     - 显示当前时间
+  theme <color> - 切换主题 (blue/red)
+  version  - 显示版本信息
+  history  - 显示命令历史`;
+
+                    case 'about':
+                        return `[SYSTEM] AngelCrystal Terminal v2.0\n\nAngelCrystal 是一个高级管理系统，专为高效控制和管理设计。它采用了先进的Web技术构建。\n\n开发团队:\n  - TheronVaux: UI设计，核心模块开发和系统集成\n  - InfinitySKY: UI/UX设计，用户界面和交互体验\n  - SHENGYUE: 后端开发工程师\n\n版本: 2.0.0\n许可: MIT 开源协议`;
+
+                    case 'clear':
+                        this.clearTerminal();
+                        return '';
+
+                    case 'time':
+                        return `[SYSTEM] 当前系统时间是: ${new Date().toLocaleString('zh-CN')}`;
+
+                    case 'theme blue':
+                        app.switchTheme('blue');
+                        return '[SUCCESS] 主题已切换为蓝色主题。';
+
+                    case 'theme red':
+                        app.switchTheme('red');
+                        return '[SUCCESS] 主题已切换为红色主题。';
+
+                    case 'version':
+                        return `[INFO] Aurora-Angel 版本信息: v26.1.0.0517`;
+
+                    case 'history':
+                        if (this.history.length === 0) {
+                            return '[WARN] 没有命令历史记录。';
+                        } else {
+                            let output = '';
+                            this.history.forEach((cmd, index) => {
+                                output += `${index + 1}. ${cmd}\n`;
+                            });
+                            return output;
+                        }
+
+                    default:
+                        return `[ERROR] 命令未找到: "${command}"。输入 'help' 查看可用命令。\n\n使用方法示例: help | about | theme blue`;
+                }
+            },
+
+            clearTerminal() {
+                const terminalBody = document.getElementById('terminalBody');
+                if (terminalBody) {
+                    // 保持历史记录，只清空显示内容，然后重新添加欢迎消息
+                    this.history = []; // 为了模拟完全刷新，这里也清除内部记录
+                    this.addWelcomeMessage();
+                }
+            },
+
+            navigateHistory(direction) {
+                if (this.history.length === 0) return;
+
+                // 计算新索引，确保在历史范围之内
+                const newIndex = this.historyIndex + direction;
+                this.historyIndex = Math.max(-1, Math.min(this.history.length - 1, newIndex));
+
+                const input = document.querySelector('.terminal-input:last-child');
+                if (input && this.historyIndex !== -1) {
+                    input.textContent = this.history[this.historyIndex];
+                    // 聚焦后，模拟光标在末尾（可选）
+                    setTimeout(() => this.focusInput(), 50);
+                } else if (input) {
+                     input.textContent = ''; // 如果超出范围，清空输入框
+                }
+            },
+
+            autoComplete(input) {
+                const commands = ['help', 'about', 'clear', 'time', 'theme', 'version', 'history'];
+                const currentText = input.textContent.toLowerCase();
+
+                // 查找匹配的命令
+                let match = commands.find(cmd => cmd.startsWith(currentText));
+                if (match) {
+                    input.textContent = match;
+                } else if (currentText.length > 0) {
+                    // 如果找不到精确匹配，提供建议（可选）
+                    const suggestions = commands.filter(c => c.startsWith(currentText));
+                    console.log("Suggestions:", suggestions);
+                }
+            },
+
+            scrollToBottom() {
+                const terminalBody = document.getElementById('terminalBody');
+                if (terminalBody) {
+                    terminalBody.scrollTop = terminalBody.scrollHeight;
+                }
+            }
+        };
+    </script>
+
+
+    <!-- 嵌入 main.js -->
+    <script>
+        // 主应用类
+        class AngelCrystalApp {
+            constructor() {
+                this.currentLang = 'zh-CN';
+                this.currentTheme = 'blue';
+                this.currentFeatures = [];
+                this.isLoggedIn = false;
+
+                this.init();
+            }
+
+            init() {
+                this.loadConfig();
+                this.setupEventListeners();
+                this.applyLanguage();
+                this.applyTheme();
+
+                if (this.isLoggedIn) {
+                    this.showMainUI();
+                }
+            }
+
+            // 配置管理
+            loadConfig() {
+                // 加载语言设置
+                const savedLang = localStorage.getItem('systemLanguage');
+                if (savedLang && langPack[savedLang]) {
+                    this.currentLang = savedLang;
+                }
+
+                // 加载主题设置
+                const savedTheme = localStorage.getItem('systemTheme');
+                if (savedTheme) {
+                    this.currentTheme = savedTheme;
+                }
+
+                // 加载功能库配置
+                const savedFeatures = localStorage.getItem('featureConfig');
+                if (savedFeatures) {
+                    try {
+                        this.currentFeatures = JSON.parse(savedFeatures);
+                    } catch (e) {
+                        console.error('解析功能配置失败，使用默认配置', e);
+                        this.currentFeatures = [...defaultFeatures];
+                    }
+                } else {
+                    // 确保加载时使用一份深拷贝的默认值
+                    this.currentFeatures = defaultFeatures.map(f => ({ ...f }));
+                }
+
+                // 检查登录状态
+                this.isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            }
+
+            saveConfig() {
+                localStorage.setItem('systemLanguage', this.currentLang);
+                localStorage.setItem('systemTheme', this.currentTheme);
+                localStorage.setItem('featureConfig', JSON.stringify(this.currentFeatures));
+            }
+
+            // 事件监听器设置
+            setupEventListeners() {
+                // 登录相关
+                document.getElementById('loginBtn').addEventListener('click', () => this.checkLogin());
+                document.getElementById('password').addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') this.checkLogin();
+                });
+
+                // 导航
+                document.querySelectorAll('.nav-button').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        this.switchPage(e.target.dataset.page);
+                    });
+                });
+
+                // 日志相关
+                document.getElementById('addLogBtn').addEventListener('click', () => this.addLog());
+                document.getElementById('logInput').addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') this.addLog();
+                });
+
+                // 设置相关
+                this.setupSettingsListeners();
+            }
+
+            setupSettingsListeners() {
+                // 主题切换
+                document.querySelectorAll('.theme-option').forEach(option => {
+                    option.addEventListener('click', () => {
+                        this.switchTheme(option.dataset.theme);
+                    });
+                });
+
+                // 背景切换
+                document.querySelectorAll('.background-option').forEach(option => {
+                    option.addEventListener('click', (e) => {
+                        const type = option.dataset.background;
+                        if (type === 'custom') {
+                            document.getElementById('bgUpload').click();
+                        } else {
+                            this.switchBackground(type);
+                        }
+                    });
+                });
+
+                // 语言切换
+                document.querySelectorAll('.lang-option').forEach(option => {
+                    option.addEventListener('click', () => {
+                        this.switchLanguage(option.dataset.lang);
+                    });
+                });
+
+                // 功能库配置
+                document.querySelector('.feature-header').addEventListener('click', (e) => {
+                    const header = e.currentTarget;
+                    this.toggleFeatureConfig(header);
+                });
+
+                document.getElementById('saveConfigBtn').addEventListener('click', () => this.saveFeatureConfig());
+                document.getElementById('resetConfigBtn').addEventListener('click', () => this.resetFeatureConfig());
+
+                // 背景上传
+                document.getElementById('bgUpload').addEventListener('change', (e) => {
+                    this.uploadBackground(e);
+                });
+            }
+
+            // 登录功能
+            checkLogin() {
+                const ADMIN_ID = "Admin";
+                const ADMIN_PW = "123";
+                const btn = document.getElementById('loginBtn');
+
+                const adminId = document.getElementById("adminId").value;
+                const password = document.getElementById("password").value;
+
+                if(adminId === ADMIN_ID && password === ADMIN_PW) {
+                    this.isLoggedIn = true;
+                    localStorage.setItem('isLoggedIn', 'true');
+                    this.showMainUI();
+                } else {
+                    this.showLoginError(btn);
+                }
+            }
+
+            showLoginError(btn) {
+                const originalText = btn.innerHTML;
+                // 使用当前语言显示错误信息
+                btn.innerHTML = langPack[this.currentLang]['login.accessDenied'];
+                btn.style.background = "#d90000";
+
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.background = '';
+                }, 2000);
+            }
+
+            showMainUI() {
+                document.getElementById("loginPanel").style.display = "none";
+                document.getElementById("mainPanel").style.display = "block";
+
+                // 初始化各种组件
+                particles.init(); // particles.js 依赖于 DOM 加载
+                this.startClocks();
+                this.updateGreeting();
+                this.renderFeatureGrid();
+                terminal.init(); // terminal.js 依赖于 DOM 加载
+
+                // 切换到主页
+                this.switchPage('intro');
+            }
+
+            // 页面切换
+            switchPage(page) {
+                // 更新导航按钮状态
+                document.querySelectorAll('.nav-button').forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.page === page);
+                });
+
+                // 切换页面内容 (使用 classlist/display 来触发 CSS 动画)
+                document.querySelectorAll('.page-section').forEach(section => {
+                    const isActive = section.id === `${page}Page`;
+                    section.classList.toggle('active', isActive);
+                    // 防止元素在被隐藏后继续进行过渡（可选优化）
+                    if (!isActive) {
+                         // 强制重新渲染，确保动画重置
+                        setTimeout(() => section.style.animation = 'none', 50);
+                    } else {
+                        section.style.animation = 'fadeIn 0.5s ease-out';
+                    }
+                });
+
+                // 特殊页面处理
+                if (page === 'settings') {
+                    this.renderFeatureConfigForm();
+                    // 确保在进入设置页时配置面板是默认展开的（如果需要）
+                    const configContent = document.getElementById('featureConfigContent');
+                     if(configContent) {
+                        configContent.classList.remove('collapsed');
+                        document.querySelector('.feature-header .toggle-icon').textContent = '▼';
+                    }
+
+                }
+            }
+
+            // 时间相关功能
+            startClocks() {
+                this.updateTime();
+                this.updateBigClock();
+                setInterval(() => {
+                    this.updateTime();
+                    this.updateBigClock();
+                }, 1000);
+            }
+
+            updateTime() {
+                const now = new Date();
+                // 注意：这里使用中文本地化格式，与日志保持一致
+                const timeString = now.toLocaleTimeString('zh-CN', {
+                    hour12: false,
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
+                document.getElementById('timeDisplay').textContent = timeString;
+            }
+
+            updateBigClock() {
+                const now = new Date();
+                const bigClock = document.getElementById('bigClock');
+                const bigDate = document.getElementById('bigDate');
+
+                // 更新时间 (纯数字格式)
+                const timeString = now.toLocaleTimeString('zh-CN', {
+                    hour12: false,
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
+                bigClock.textContent = timeString;
+
+                // 更新日期 (中文格式)
+                const weekdays = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+                const dateString = `${now.getFullYear()}年${String(now.getMonth() + 1).padStart(2, '0')}月${String(now.getDate()).padStart(2, '0')}日 ${weekdays[now.getDay()]}`;
+                bigDate.textContent = dateString;
+            }
+
+            updateGreeting() {
+                const greeting = document.getElementById('greeting');
+                const now = new Date();
+                const hour = now.getHours();
+
+                let greetingText = '';
+
+                if (hour >= 5 && hour < 12) {
+                    greetingText = '早上好';
+                } else if (hour >= 12 && hour < 14) {
+                    greetingText = '中午好';
+                } else if (hour >= 14 && hour < 18) {
+                    greetingText = '下午好';
+                } else if (hour >= 18 && hour < 24) {
+                    greetingText = '晚上好';
+                } else {
+                    greetingText = '夜深了';
+                }
+
+                greetingText += '，管理员';
+                greeting.textContent = greetingText;
+            }
+
+            // 语言功能
+            applyLanguage() {
+                // 更新所有带有data-lang-key属性的元素
+                const elements = document.querySelectorAll('[data-lang-key]');
+                elements.forEach(el => {
+                    const key = el.getAttribute('data-lang-key');
+                    if (langPack[this.currentLang][key]) {
+                        // 对于文本内容替换，但如果它是部分内容的容器（如 status-time 的 span），需要单独处理。
+                         let content = el.textContent;
+
+                         // 尝试找到一个占位符或特定子元素进行局部更新
+                         if (el.id === 'statusTimeWrapper') { // 特殊处理时间标签的容器
+                            el.previousElementSibling.textContent = langPack[this.currentLang][key];
+                            return;
+                        }
+
+                        // 默认文本内容替换
+                        el.textContent = langPack[this.currentLang][key];
+                    }
+                });
+
+                // 更新所有带有data-lang-key-placeholder属性的元素
+                const placeholders = document.querySelectorAll('[data-lang-key-placeholder]');
+                placeholders.forEach(el => {
+                    const key = el.getAttribute('data-lang-key-placeholder');
+                    if (langPack[this.currentLang][key]) {
+                        el.placeholder = langPack[this.currentLang][key];
+                    }
+                });
+
+                // 更新语言选择按钮状态
+                document.querySelectorAll('.lang-option').forEach(option => {
+                    option.classList.toggle('active', option.dataset.lang === this.currentLang);
+                });
+            }
+
+            switchLanguage(lang) {
+                if (lang === this.currentLang) return;
+
+                this.currentLang = lang;
+                this.saveConfig();
+                this.applyLanguage();
+
+                // 添加语言切换日志，注意需要根据新语言获取正确的字符串
+                const switchLogContent = langPack[this.currentLang]['lang.switchLog'] + (lang === 'zh-CN' ? '简体中文' : 'English');
+                this.addSystemLog(switchLogContent);
+            }
+
+            // 主题功能
+            applyTheme() {
+                document.body.setAttribute('data-theme', this.currentTheme);
+
+                // 更新主题选择按钮状态
+                document.querySelectorAll('.theme-option').forEach(option => {
+                    option.classList.toggle('active', option.dataset.theme === this.currentTheme);
+                });
+            }
+
+            switchTheme(theme) {
+                if (theme === this.currentTheme) return;
+
+                this.currentTheme = theme;
+                this.saveConfig();
+                this.applyTheme();
+
+                // 添加主题切换日志
+                const themeNameKey = theme === 'blue' ? 'settings.blueTheme' : 'settings.redTheme';
+                const themeName = langPack[this.currentLang][themeNameKey];
+
+                this.addSystemLog(`主题已切换为: ${themeName}`);
+            }
+
+            // 背景功能
+            switchBackground(type) {
+                let backgroundUrl = '';
+                let bgNameKey;
+
+                if (type === 'default') {
+                    backgroundUrl = '';
+                    bgNameKey = 'settings.defaultBg';
+                } else if (type === 'space') {
+                    backgroundUrl = 'url(https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=1350&q=80)';
+                    bgNameKey = 'settings.spaceBg';
+                } else if (type === 'cyber') {
+                    backgroundUrl = 'url(https://images.unsplash.com/photo-1516245834216-c4e5e3aff77e?auto=format&fit=crop&w=1350&q=80)';
+                    bgNameKey = 'settings.cyberBg';
+                } else {
+                    return;
+                }
+
+                document.body.style.backgroundImage = backgroundUrl;
+                // 存储背景的样式字符串，而不是URL（对于纯色或无图）
+                localStorage.setItem('customBackground', type === 'default' ? '' : backgroundUrl);
+
+
+                // 更新粒子显示 (重新初始化确保颜色和尺寸适应新背景)
+                particles.init();
+
+                // 更新背景选择按钮状态
+                document.querySelectorAll('.background-option').forEach(option => {
+                    option.classList.toggle('active', option.dataset.background === type);
+                });
+
+                // 添加背景切换日志
+                const bgName = langPack[this.currentLang][bgNameKey];
+                this.addSystemLog(langPack[this.currentLang]['log.bgChanged'] + bgName);
+            }
+
+            uploadBackground(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const url = `url(${e.target.result})`;
+                        document.body.style.backgroundImage = url;
+                        localStorage.setItem('customBackground', url);
+                        particles.init();
+
+                        // 更新背景选择按钮状态，强制选中 custom 选项
+                        document.querySelectorAll('.background-option').forEach(option => {
+                            option.classList.toggle('active', option.dataset.background === 'custom');
+                        });
+
+                        this.addSystemLog(langPack[this.currentLang]['log.bgChanged'] + langPack[this.currentLang]['settings.uploadBg']);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+
+            // 日志功能
+            addLog() {
+                const logInput = document.getElementById('logInput');
+                const logContent = logInput.value.trim();
+
+                if (logContent === '') {
+                    this.showInputError(logInput, langPack[this.currentLang]['log.emptyWarning']);
+                    return;
+                }
+
+                const now = new Date();
+                // 使用完整本地化时间，与终端保持一致的风格（但此处用中文全格式）
+                const timeString = now.toLocaleString('zh-CN');
+
+                this.addLogEntry(timeString, logContent, 'user');
+                logInput.value = '';
+
+                this.showInputSuccess(logInput);
+            }
+
+            addSystemLog(content) {
+                const now = new Date();
+                // 使用完整本地化时间
+                const timeString = now.toLocaleString('zh-CN');
+                this.addLogEntry(timeString, content, 'system');
+            }
+
+            addLogEntry(time, content, type = 'user') {
+                const logListContainer = (type === 'user' ? document.getElementById('logList') : document.getElementById('updateLogList'));
+                if (!logListContainer) return;
+
+
+                const logEntry = document.createElement('div');
+                // 根据类型添加不同的类名，以便CSS区分颜色和删除按钮的显示
+                logEntry.className = `log-entry ${type}-log`;
+
+                let deleteButtonHtml = type === 'user' ? '<div class="delete-log">×</div>' : '';
+
+                logEntry.innerHTML = `
+                    <div class="log-header">
+                        <strong style="color: ${type === 'user' ? 'var(--primary-color)' : 'var(--secondary-color)'}">${type === 'user' ? langPack[this.currentLang]['logs.admin'] : langPack[this.currentLang]['logs.system']}</strong>
+                        <span class="log-time">${time}</span>
+                    </div >
+                    <div class="log-content">
+                        ${content.replace(/\n/g, '<br>')}
+                    </div>
+                    ${deleteButtonHtml}
+                `;
+
+                if (type === 'user') {
+                    const deleteBtn = logEntry.querySelector('.delete-log');
+                    deleteBtn.addEventListener('click', (e) => this.deleteLog(e));
+                }
+
+                // 插入到顶部，实现时间倒叙效果
+                logListContainer.prepend(logEntry);
+            }
+
+            deleteLog(event) {
+                const logEntry = event.target.closest('.log-entry');
+                if (logEntry) {
+                    logEntry.style.opacity = '0';
+                    logEntry.style.transform = 'translateX(-100px)'; // 从左侧飞出
+                    logEntry.style.transition = 'opacity 0.3s, transform 0.3s';
+
+                    setTimeout(() => {
+                        logEntry.remove();
+                    }, 300);
+                }
+            }
+
+
+            showInputError(input, message) {
+                // 视觉反馈：红色边框和阴影
+                input.style.borderColor = 'var(--danger-color)';
+                input.style.boxShadow = '0 0 15px rgba(255, 50, 50, 0.5)';
+
+                setTimeout(() => {
+                    // 清除样式，但保持原始的焦点状态不变（如果之前有）
+                    input.style.borderColor = '';
+                    input.style.boxShadow = '';
+                }, 2000);
+
+                console.warn(`[Input Error]: ${message}`);
+            }
+
+            showInputSuccess(input) {
+                 // 视觉反馈：绿色边框和阴影
+                input.style.borderColor = 'var(--success-color)';
+                input.style.boxShadow = '0 0 15px rgba(0, 255, 136, 0.5)';
+
+                setTimeout(() => {
+                    // 清除样式
+                    input.style.borderColor = '';
+                    input.style.boxShadow = '';
+                }, 1000);
+            }
+
+
+            // 功能库功能
+            renderFeatureGrid() {
+                const grid = document.getElementById('featuresGrid');
+                if (!grid) return;
+
+                grid.innerHTML = '';
+
+                this.currentFeatures.forEach((feature, index) => {
+                    const item = document.createElement('div');
+                    item.className = 'icon-item';
+                    item.innerHTML = `
+                        <div class="hologram-icon"></div>
+                        <div class="feature-name">${feature.name}</div>
+                    `;
+
+                    item.addEventListener('click', () => {
+                        this.executeFeature(feature);
+                    });
+
+                    grid.appendChild(item);
+                });
+            }
+
+            executeFeature(feature) {
+                if (feature.link && feature.link.trim() !== '') {
+                    // 检查是否是 HTTP/HTTPS 或 javascript:
+                    const isExternal = feature.link.startsWith('http://') || feature.link.startsWith('https://');
+                    const isScript = feature.link.startsWith('javascript:');
+
+                    if (isExternal) {
+                        window.open(feature.link, '_blank');
+                    } else if (isScript) {
+                        try {
+                            // 执行 JavaScript 代码片段
+                            (new Function(feature.link.substring(11)))();
+                        } catch (e) {
+                            console.error('执行JavaScript出错:', e);
+                            this.addSystemLog(`[JS ERROR] 执行功能时出错: ${e.message}`);
+                        }
+                    } else {
+                         this.addSystemLog(`[ERROR] 功能链接格式不正确: ${feature.name}`);
+                    }
+                }
+            }
+
+            // 功能库配置
+            renderFeatureConfigForm() {
+                const container = document.getElementById('featureConfigContainer');
+                if (!container) return;
+                container.innerHTML = '';
+
+                this.currentFeatures.forEach((feature, index) => {
+                    const featureItem = document.createElement('div');
+                    featureItem.className = 'feature-item';
+                    // 为每个输入框添加唯一的ID或数据属性，方便操作
+                    featureItem.dataset.index = index;
+
+                    featureItem.innerHTML = `
+                        <label>功能名称 #${index + 1}</label>
+                        <input type="text" class="feature-input feature-name" data-index="${index}"
+                               value="${feature.name}" placeholder="${langPack[this.currentLang]['feature.emptyWarning']}">
+                        <input type="text" class="feature-input feature-link" data-index="${index}"
+                               value="${feature.link}" placeholder="${langPack[this.currentLang]['feature.linkWarning']}">
+                        <div class="feature-warning"></div>
+                    `;
+
+                    container.appendChild(featureItem);
+                });
+            }
+
+            saveFeatureConfig() {
+                const featureItems = document.querySelectorAll('.feature-item');
+                const newFeatures = [];
+                let hasError = false;
+                const currentLangPack = langPack[this.currentLang];
+
+                featureItems.forEach((item) => {
+                    const index = item.dataset.index;
+                    const nameInput = item.querySelector('.feature-name');
+                    const linkInput = item.querySelector('.feature-link');
+                    const warning = item.querySelector('.feature-warning');
+                    let isValid = true;
+
+                    // 清除警告
+                    warning.textContent = '';
+                    warning.style.display = 'none';
+
+                    if (!nameInput || !linkInput) return;
+
+
+                    // 检查名称和链接是否为空
+                    if (nameInput.value.trim() === '' || linkInput.value.trim() === '') {
+                        warning.textContent = currentLangPack['feature.emptyWarning'];
+                        warning.style.display = 'block';
+                        isValid = false;
+                    }
+
+                    // 检查链接格式是否符合要求
+                    const linkValue = linkInput.value.trim();
+                    if (linkValue !== '' && !linkValue.startsWith('http') && !linkValue.startsWith('javascript:')) {
+                        warning.textContent = currentLangPack['feature.linkWarning'];
+                        warning.style.display = 'block';
+                        isValid = false;
+                    }
+
+                    if (!isValid) {
+                        hasError = true;
+                    } else {
+                        newFeatures.push({
+                            name: nameInput.value.trim(),
+                            link: linkValue
+                        });
+                    }
+                });
+
+                if (hasError || newFeatures.length !== this.currentFeatures.length) return; // 阻止保存带有错误的数据
+
+                this.currentFeatures = newFeatures;
+                this.saveConfig();
+                this.renderFeatureGrid();
+
+                this.addSystemLog(currentLangPack['feature.saveSuccess']);
+
+                // 显示成功消息 (使用 Toast 组件，需要Toast函数存在)
+                if(typeof this.showToast === 'function') {
+                     this.showToast(currentLangPack['feature.saveSuccess'], 'success');
+                }
+            }
+
+            resetFeatureConfig() {
+                const currentLangPack = langPack[this.currentLang];
+                if (confirm(currentLangPack['feature.resetConfirm'])) {
+                    // 深度拷贝默认配置
+                    this.currentFeatures = defaultFeatures.map(f => ({ ...f }));
+                    this.saveConfig();
+                    this.renderFeatureConfigForm();
+                    this.renderFeatureGrid();
+
+                    this.addSystemLog(currentLangPack['feature.resetSuccess']);
+                     if(typeof this.showToast === 'function') {
+                        this.showToast(currentLangPack['feature.resetSuccess'], 'success');
+                    }
+                }
+            }
+
+            toggleFeatureConfig(headerElement) {
+                const content = document.getElementById('featureConfigContent');
+                if (!content) return;
+                const toggleIcon = headerElement.querySelector('.toggle-icon');
+
+                // 切换类名和图标
+                const isCollapsed = !content.classList.contains('collapsed');
+                content.classList.toggle('collapsed', isCollapsed);
+                toggleIcon.textContent = isCollapsed ? '▶' : '▼';
+            }
+
+            // 工具函数: Toast 通知 (用于成功/失败反馈)
+            showToast(message, type = 'info') {
+                const toast = document.createElement('div');
+                toast.className = `toast toast-${type}`;
+                toast.textContent = message;
+                toast.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    padding: 12px 20px;
+                    background: rgba(10, 26, 47, 0.9); /* 使用背景色 */
+                    border: 1px solid var(--primary-color);
+                    border-radius: 8px;
+                    color: var(--text-color);
+                    z-index: 1000;
+                    backdrop-filter: blur(12px);
+                    box-shadow: 0 5px 20px rgba(0, 247, 255, 0.3);
+                    animation: slideInRight 0.3s ease-out;
+                `;
+
+                document.body.appendChild(toast);
+
+                setTimeout(() => {
+                    toast.remove();
+                }, 3000);
+            }
+        }
+
+        // 初始化应用
+        const app = new AngelCrystalApp();
+    </script>
+
+</body>
+</html>
